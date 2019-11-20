@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--  ___    _         _   _ _         -->
+    <!-- |_ _|__| |___ _ _| |_(_) |_ _  _  -->
+    <!--  | |/ _` / -_) ' \  _| |  _| || | -->
+    <!-- |___\__,_\___|_||_\__|_|\__|\_, | -->
+    <!--                             |__/  -->
+    <groupId>lu.cgi.d4g</groupId>
+    <artifactId>download-proxy</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!--  ___                       _   _         -->
+    <!-- | _ \_ _ ___ _ __  ___ _ _| |_(_)___ ___ -->
+    <!-- |  _/ '_/ _ \ '_ \/ -_) '_|  _| / -_|_-< -->
+    <!-- |_| |_| \___/ .__/\___|_|  \__|_\___/__/ -->
+    <!--             |_|                          -->
+    <properties>
+        <!-- Build properties -->
+        <java.version>1.8</java.version>
+        <encoding>UTF-8</encoding>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.parameters>true</maven.compiler.parameters>
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+
+        <!-- Quarkus version -->
+        <quarkus.version>0.28.1</quarkus.version>
+
+        <!-- Other plugins versions -->
+        <!-- Ensure surefire version supports JUnit 5 -->
+        <surefire-plugin.version>2.22.0</surefire-plugin.version>
+        <compiler-plugin.version>3.8.1</compiler-plugin.version>
+    </properties>
+
+    <!--  ___                        _                                     -->
+    <!-- |   \ ___ _ __  ___ _ _  __| |___ _ _  __ _  _   _ __  _ _  __ _  -->
+    <!-- | |) / -_) '_ \/ -_) ' \/ _` / -_) ' \/ _| || | | '  \| ' \/ _` | -->
+    <!-- |___/\___| .__/\___|_||_\__,_\___|_||_\__|\_, | |_|_|_|_||_\__, | -->
+    <!--          |_|                              |__/             |___/  -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- With the "import" scope, this works like the spring-boot-starter-parent used as parent. -->
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!--  ___                        _             _         -->
+    <!-- |   \ ___ _ __  ___ _ _  __| |___ _ _  __(_)___ ___ -->
+    <!-- | |) / -_) '_ \/ -_) ' \/ _` / -_) ' \/ _| / -_|_-< -->
+    <!-- |___/\___| .__/\___|_||_\__,_\___|_||_\__|_\___/__/ -->
+    <!--          |_|                                        -->
+    <dependencies>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy</artifactId>
+        </dependency>
+
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!--  ___      _ _    _  -->
+    <!-- | _ )_  _(_) |__| | -->
+    <!-- | _ \ || | | / _` | -->
+    <!-- |___/\_,_|_|_\__,_| -->
+    <!--                     -->
+    <build>
+        <plugins>
+            <!-- The Quarkus plugin provides the development mode -->
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-plugin.version}</version>
+                <configuration>
+                    <systemProperties>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--  ___          __ _ _         -->
+    <!-- | _ \_ _ ___ / _(_) |___ ___ -->
+    <!-- |  _/ '_/ _ \  _| | / -_|_-< -->
+    <!-- |_| |_| \___/_| |_|_\___/__/ -->
+    <!--                              -->
+    <profiles>
+        <profile>
+            <id>native</id>
+            <activation>
+                <property>
+                    <name>native</name>
+                </property>
+            </activation>
+            <properties>
+                <quarkus.package.type>native</quarkus.package.type>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${surefire-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                                <configuration>
+                                    <systemProperties>
+                                        <native.image.path>
+                                            ${project.build.directory}/${project.build.finalName}-runner
+                                        </native.image.path>
+                                    </systemProperties>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
