@@ -31,6 +31,9 @@
         <!-- Quarkus version -->
         <quarkus.version>0.28.1</quarkus.version>
 
+        <!-- Dependencies version -->
+        <lombok.version>1.18.10</lombok.version>
+
         <!-- Other plugins versions -->
         <!-- Ensure surefire version supports JUnit 5 -->
         <surefire-plugin.version>2.22.0</surefire-plugin.version>
@@ -74,6 +77,15 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-mariadb</artifactId>
+        </dependency>
+
+        <!-- Developer tools -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <!-- REST dependencies -->
