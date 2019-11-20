@@ -11,7 +11,7 @@ import javax.validation.Valid;
 public class TenantService {
 
     @Inject
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
     public void save(@Valid TenantEntity tenantEntity) {
         entityManager.persist(tenantEntity);
