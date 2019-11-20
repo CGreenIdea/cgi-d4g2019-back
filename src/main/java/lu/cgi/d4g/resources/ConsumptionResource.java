@@ -23,6 +23,7 @@ public class ConsumptionResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public List<ConsumptionEntity> getRangeConsumptionByUser(ConsumptionBean consumptionBean) {
-        return consumptionService.getRangeConsumptionByUser("", consumptionBean.getDateStart(), consumptionBean.getDateEnd());  // TODO userId
+        String user = ""; // TODO userId
+        return consumptionService.getRangeConsumptionByUser(user, consumptionBean.getDateStart(), consumptionBean.getDateEnd());
     }
 }

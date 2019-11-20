@@ -9,6 +9,7 @@ import java.util.List;
 
 @ApplicationScoped
 public class ConsumptionService {
+
     @Inject
     private EntityManager entityManager;
 
