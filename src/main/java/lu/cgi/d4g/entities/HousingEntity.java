@@ -6,39 +6,42 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.Table;
 
 @Entity
-public class Housing {
+@Table(name = "housing")
+public class HousingEntity {
 
     @Id
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "home_id")
     @MapsId
-    private Home home;
+    private HomeEntity homeEntity;
 
     private String type;
 
     @Column(length = 4)
     private int surface;
 
-    @Column(length = 2)
+    @Column(name = "nb_room", length = 2)
     private int nbRooms;
 
+    @Column(name="heat_source")
     private String heatSource;
 
-    @Column(length = 4)
+    @Column(name = "construction_year", length = 4)
     private int constructionYear;
 
-    @Column(length = 10)
+    @Column(name = "street_nb", length = 10)
     private String streetNb;
 
     private String street;
 
     private String city;
 
-    @Column(length = 6)
+    @Column(name = "postal_code", length = 6)
     private String postalCode;
 
     public Long getId() {
@@ -49,12 +52,12 @@ public class Housing {
         this.id = id;
     }
 
-    public Home getHome() {
-        return home;
+    public HomeEntity getHomeEntity() {
+        return homeEntity;
     }
 
-    public void setHome(Home home) {
-        this.home = home;
+    public void setHomeEntity(HomeEntity homeEntity) {
+        this.homeEntity = homeEntity;
     }
 
     public String getType() {

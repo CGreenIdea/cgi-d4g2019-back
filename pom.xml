@@ -76,6 +76,12 @@
             <artifactId>quarkus-jdbc-postgresql</artifactId>
         </dependency>
 
+        <!-- REST dependencies -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-jsonb</artifactId>
+        </dependency>
+
         <!-- Test dependencies -->
         <dependency>
             <groupId>io.quarkus</groupId>

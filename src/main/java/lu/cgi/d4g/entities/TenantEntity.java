@@ -1,24 +1,29 @@
 package lu.cgi.d4g.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.Table;
 
 @Entity
-public class Tenant {
+@Table(name = "tenant")
+public class TenantEntity {
 
     @Id
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "home_id")
     @MapsId
-    private Home home;
+    private HomeEntity homeEntity;
 
+    @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "first_name")
     private String firstName;
 
     public Long getId() {
@@ -29,12 +34,12 @@ public class Tenant {
         this.id = id;
     }
 
-    public Home getHome() {
-        return home;
+    public HomeEntity getHomeEntity() {
+        return homeEntity;
     }
 
-    public void setHome(Home home) {
-        this.home = home;
+    public void setHomeEntity(HomeEntity homeEntity) {
+        this.homeEntity = homeEntity;
     }
 
     public String getLastName() {

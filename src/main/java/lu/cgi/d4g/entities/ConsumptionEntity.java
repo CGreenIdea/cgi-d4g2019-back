@@ -6,19 +6,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
-public class Consumption {
+@Table(name = "consumption")
+public class ConsumptionEntity {
 
     @Id
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "home_id")
     @MapsId
-    private Home home;
+    private HomeEntity homeEntity;
 
-    private int readingDate;
+    @Column(name = "reading_date")
+    private LocalDate readingDate;
 
     @Column(length = 8)
     private int energy;
@@ -31,19 +35,19 @@ public class Consumption {
         this.id = id;
     }
 
-    public Home getHome() {
-        return home;
+    public HomeEntity getHomeEntity() {
+        return homeEntity;
     }
 
-    public void setHome(Home home) {
-        this.home = home;
+    public void setHomeEntity(HomeEntity homeEntity) {
+        this.homeEntity = homeEntity;
     }
 
-    public int getReadingDate() {
+    public LocalDate getReadingDate() {
         return readingDate;
     }
 
-    public void setReadingDate(int readingDate) {
+    public void setReadingDate(LocalDate readingDate) {
         this.readingDate = readingDate;
     }
 
