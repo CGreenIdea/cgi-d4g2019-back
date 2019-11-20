@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 public class HelloResource {
 
     @Inject
-    private HelloService helloService;
+    HelloService helloService;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)

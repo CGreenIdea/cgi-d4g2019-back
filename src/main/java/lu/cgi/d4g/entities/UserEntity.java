@@ -15,8 +15,8 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Setter
-@Table(name = "users")
-public class UsersEntity {
+@Table(name = "user")
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +32,5 @@ public class UsersEntity {
     @Column(columnDefinition = "binary(60)")
     private String password;
 
-    private String email;
+    private String role;
 }

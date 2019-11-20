@@ -24,7 +24,7 @@ public class HomeEntity {
     private String label;
 
     @OneToMany(mappedBy = "home")
-    private List<UsersEntity> users;
+    private List<UserEntity> users;
 
     @OneToMany(mappedBy = "home")
     private List<TenantEntity> tenants;
