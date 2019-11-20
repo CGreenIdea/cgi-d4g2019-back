@@ -10,7 +10,7 @@ import java.util.List;
 @ApplicationScoped
 public class ConsumptionService {
     @Inject
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
     public List<ConsumptionEntity> getRangeConsumptionByUser(String userId, String dateStart, String dateEnd) {
         return entityManager.createQuery("SELECT c FROM consumption c WHERE c.id = :id AND c.readingDate BETWEEN :dateStart AND :dateEnd", ConsumptionEntity.class)

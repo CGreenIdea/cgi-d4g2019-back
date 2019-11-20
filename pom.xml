@@ -64,12 +64,11 @@
     <!-- |___/\___| .__/\___|_||_\__,_\___|_||_\__|_\___/__/ -->
     <!--          |_|                                        -->
     <dependencies>
+        <!-- Quarkus & extensions -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy</artifactId>
         </dependency>
-
-        <!-- DATA dependencies -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-orm</artifactId>
@@ -77,6 +76,10 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-mariadb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-jsonb</artifactId>
         </dependency>
 
         <!-- Developer tools -->
@@ -86,12 +89,6 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
             <optional>true</optional>
-        </dependency>
-
-        <!-- REST dependencies -->
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-jsonb</artifactId>
         </dependency>
 
         <!-- Test dependencies -->
