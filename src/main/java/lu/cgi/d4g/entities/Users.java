@@ -3,6 +3,8 @@ package lu.cgi.d4g.entities;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Users {
@@ -10,7 +12,10 @@ public class Users {
     @Id
     @GeneratedValue
     private long id;
-    private long homeId;
+
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Home home;
     private String userId;
     private String password;
     private String email;
@@ -23,12 +28,12 @@ public class Users {
         this.id = id;
     }
 
-    public long getHomeId() {
-        return homeId;
+    public Home getHome() {
+        return home;
     }
 
-    public void setHomeId(long homeId) {
-        this.homeId = homeId;
+    public void setHome(Home home) {
+        this.home = home;
     }
 
     public String getUserId() {
