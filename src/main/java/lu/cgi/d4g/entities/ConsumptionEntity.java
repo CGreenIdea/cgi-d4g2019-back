@@ -24,7 +24,7 @@ public class ConsumptionEntity {
     @ManyToOne
     @JoinColumn(name = "home_id")
     @MapsId
-    private HomeEntity homeEntity;
+    private HomeEntity home;
 
     @Column(name = "reading_date")
     private LocalDate readingDate;

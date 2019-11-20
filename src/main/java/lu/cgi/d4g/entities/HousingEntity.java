@@ -23,14 +23,14 @@ public class HousingEntity {
     @ManyToOne
     @JoinColumn(name = "home_id")
     @MapsId
-    private HomeEntity homeEntity;
+    private HomeEntity home;
 
-    private String type;
+    private boolean type;
 
     @Column(length = 4)
     private int surface;
 
-    @Column(name = "nb_room", length = 2)
+    @Column(name = "nb_rooms", length = 2)
     private int nbRooms;
 
     @Column(name="heat_source")

@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,7 +18,7 @@ import java.util.List;
 public class HomeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String label;
@@ -26,14 +27,14 @@ public class HomeEntity {
     private List<UsersEntity> users;
 
     @OneToMany(mappedBy = "home")
-    private List<TenantEntity> tenantEntities;
+    private List<TenantEntity> tenants;
 
     @OneToMany(mappedBy = "home")
-    private List<LandlordEntity> landlordEntity;
+    private List<LandlordEntity> landlords;
 
     @OneToMany(mappedBy = "home")
-    private List<ConsumptionEntity> consumptionEntities;
+    private List<ConsumptionEntity> consumptions;
 
     @OneToMany(mappedBy = "home")
-    private List<HousingEntity> housingEntities;
+    private List<HousingEntity> housings;
 }

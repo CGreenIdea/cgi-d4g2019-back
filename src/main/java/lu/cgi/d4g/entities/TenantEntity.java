@@ -23,7 +23,7 @@ public class TenantEntity {
     @ManyToOne
     @JoinColumn(name = "home_id")
     @MapsId
-    private HomeEntity homeEntity;
+    private HomeEntity home;
 
     @Column(name = "last_name")
     private String lastName;
