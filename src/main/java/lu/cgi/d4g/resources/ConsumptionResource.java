@@ -23,7 +23,7 @@ public class ConsumptionResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public List<ConsumptionEntity> getRangeConsumptionByUser(ConsumptionBean consumptionBean) {
-        return entityManager.createNamedQuery("SELECT c FROM consumption c WHERE c.id = :id AND c.readingDate BETWEEN :dateStart AND :dateEnd", ConsumptionEntity.class)
+        return entityManager.createQuery("SELECT c FROM consumption c WHERE c.id = :id AND c.readingDate BETWEEN :dateStart AND :dateEnd", ConsumptionEntity.class)
             .setParameter("id", "0") // TODO
             .setParameter("dateStart", consumptionBean.getDateStart())
             .setParameter("dateEnd", consumptionBean.getDateEnd())
