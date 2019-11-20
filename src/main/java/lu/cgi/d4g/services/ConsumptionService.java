@@ -5,6 +5,7 @@ import lu.cgi.d4g.entities.ConsumptionEntity;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.validation.Valid;
 import java.util.List;
 
 @ApplicationScoped
@@ -19,5 +20,10 @@ public class ConsumptionService {
             .setParameter("dateStart", dateStart)
             .setParameter("dateEnd", dateEnd)
             .getResultList();
+    }
+
+    public void save(@Valid ConsumptionEntity consumptionEntity) {
+        entityManager.persist(consumptionEntity);
+        entityManager.flush();
     }
 }

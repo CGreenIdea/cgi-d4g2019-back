@@ -30,6 +30,8 @@ public class LandlordEntity {
 
     @Column(name = "first_name")
     private String firstName;
+
     private String company;
+
     private String address;
 }

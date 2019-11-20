@@ -33,7 +33,7 @@ public class HousingEntity {
     @Column(name = "nb_rooms", length = 2)
     private int nbRooms;
 
-    @Column(name="heat_source")
+    @Column(name = "heat_source")
     private String heatSource;
 
     @Column(name = "construction_year", length = 4)
