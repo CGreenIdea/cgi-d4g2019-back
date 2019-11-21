@@ -16,7 +16,7 @@ public class MailerService {
     ReactiveMailer reactiveMailer;
 
     @ConfigProperty(name = "green.l4nterne.url")
-    private String url;
+    String url;
 
     public CompletionStage<Response> sendReset(String user, String token) {
         return reactiveMailer.send(Mail.withText(user, "[green l4nterne] Reset password",
@@ -37,5 +37,4 @@ public class MailerService {
                 "L'équipe de green l4nterne"))
             .thenApply(x -> Response.accepted().build());
     }
-
 }

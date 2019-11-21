@@ -22,7 +22,7 @@ public class HomeResource {
     public HomeService homeService;
 
     @GET
-    @Path("/find")
+    @Path("/mine")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"user"})
     public List<HomeEntity> find(@Context SecurityContext securityContext) {
@@ -30,7 +30,7 @@ public class HomeResource {
     }
 
     @GET
-    @Path("/findAll")
+    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("admin")
     public List<HomeEntity> findAll() {

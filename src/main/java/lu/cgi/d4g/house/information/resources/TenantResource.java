@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class TenantResource {
     public TenantService tenantService;
 
     @GET
-    @Path("/findAll")
+    @Path("/mine")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"user", "admin"})
     public List<TenantEntity> findAll(@Context SecurityContext securityContext) {
@@ -28,10 +29,19 @@ public class TenantResource {
     }
 
     @GET
-    @Path("/findAllBack")
+    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("admin")
     public List<TenantEntity> findAllBack() {
         return tenantService.findAll();
+    }
+
+    @PUT
+    @Path("/import")
+    @Produces(MediaType.TEXT_PLAIN)
+    @RolesAllowed("admin")
+    public Response importData(String csv) {
+        tenantService.importCsvData(csv);
+        return Response.ok("Données importées").build();
     }
 }
