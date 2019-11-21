@@ -20,7 +20,7 @@ public class HomeService {
     }
 
     public List<HomeEntity> findAll() {
-        return entityManager.createQuery("SELECT h FROM home h order by h.label", HomeEntity.class)
+        return entityManager.createQuery("SELECT h FROM HomeEntity h ORDER BY h.label", HomeEntity.class)
             .getResultList();
     }
 
