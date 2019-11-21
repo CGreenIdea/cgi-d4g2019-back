@@ -10,7 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import java.util.concurrent.CompletionStage;
 
-@Path("mailer")
+@Path("/mailer")
 public class MailerResource {
 
     @Inject
