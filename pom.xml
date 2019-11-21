@@ -91,6 +91,12 @@
             <artifactId>quarkus-mailer</artifactId>
         </dependency>
 
+        <!-- Multipart -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-multipart-provider</artifactId>
+        </dependency>
+
         <!-- Commons CSV -->
         <dependency>
             <groupId>org.apache.commons</groupId>
