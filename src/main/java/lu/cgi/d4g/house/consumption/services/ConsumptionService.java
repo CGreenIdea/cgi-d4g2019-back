@@ -54,6 +54,13 @@ public class ConsumptionService {
             .getResultList();
     }
 
+    public double getAverageConsumptionByUser(String userId) {
+        return entityManager
+            .createQuery("SELECT AVG(c.energy) FROM ConsumptionEntity c INNER JOIN UserEntity u ON u.home = c.home WHERE u.userId = :user", Double.class)
+            .setParameter("user", userId)
+            .getSingleResult();
+    }
+
     @Transactional
     public void importCsvData(String csv) {
         csvImportService.importAndFlattenCsvData(csv, record -> {
