@@ -45,7 +45,7 @@ public class ConsumptionService {
             .getResultList();
     }
 
-    public List<ConsumptionEntity> getRangeConsumptionByUser(String userId, String dateStart, String dateEnd) {
+    public List<ConsumptionEntity> getRangeConsumptionByUser(String userId, LocalDate dateStart, LocalDate dateEnd) {
         return entityManager
             .createQuery("SELECT c FROM ConsumptionEntity c INNER JOIN UserEntity u ON u.home = c.home WHERE u.userId = :user AND c.readingDate BETWEEN :dateStart AND :dateEnd ORDER BY c.readingDate", ConsumptionEntity.class)
             .setParameter("user", userId)
