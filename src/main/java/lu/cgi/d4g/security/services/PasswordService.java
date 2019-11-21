@@ -1,7 +1,12 @@
 package lu.cgi.d4g.security.services;
 
+import org.wildfly.security.WildFlyElytronBaseProvider;
+import org.wildfly.security.WildFlyElytronHttpBasicProvider;
 import org.wildfly.security.WildFlyElytronProvider;
+import org.wildfly.security.key.WildFlyElytronKeyProvider;
+import org.wildfly.security.keystore.WildFlyElytronKeyStoreProvider;
 import org.wildfly.security.password.PasswordFactory;
+import org.wildfly.security.password.WildFlyElytronPasswordProvider;
 import org.wildfly.security.password.interfaces.BCryptPassword;
 import org.wildfly.security.password.spec.EncryptablePasswordSpec;
 import org.wildfly.security.password.spec.IteratedSaltedPasswordAlgorithmSpec;
@@ -20,7 +25,7 @@ import java.security.spec.InvalidKeySpecException;
 @ApplicationScoped
 public class PasswordService {
 
-    private static final Provider ELYTRON_PROVIDER = new WildFlyElytronProvider();
+    private static final Provider ELYTRON_PROVIDER = new WildFlyElytronPasswordProvider();
 
     private static final int ITERATION_COUNT = 12;
 
@@ -66,5 +71,4 @@ public class PasswordService {
             throw new IllegalStateException("This exception should never occur.", e);
         }
     }
-
 }
