@@ -24,19 +24,4 @@ public class HomeEntity {
     private long id;
 
     private String label;
-
-    @OneToMany(mappedBy = "home")
-    private List<UserEntity> users;
-
-    @OneToMany(mappedBy = "home")
-    private List<TenantEntity> tenants;
-
-    @OneToMany(mappedBy = "home")
-    private List<LandlordEntity> landlords;
-
-    @OneToMany(mappedBy = "home")
-    private List<ConsumptionEntity> consumptions;
-
-    @OneToMany(mappedBy = "home")
-    private List<HousingEntity> housings;
 }
