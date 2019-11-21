@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
@@ -18,12 +17,11 @@ import javax.persistence.Table;
 public class LandlordEntity {
 
     @Id
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "home_id")
-    @MapsId
-    private HomeEntity home;
+    @Column(name = "home_id")
+    private Long home_id;
+    //@ManyToOne
+    //@JoinColumn(name = "home_id")
+    //private HomeEntity home;
 
     @Column(name = "last_name")
     private String lastName;
