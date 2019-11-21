@@ -43,6 +43,6 @@ public class HomeEntity {
 
     private String city;
 
-    @Column(name = "postal_code", length = 6)
-    private String postalCode;
+    @Column(name = "zip_code", length = 6)
+    private String zipCode;
 }

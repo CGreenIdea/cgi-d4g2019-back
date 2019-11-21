@@ -1,4 +1,4 @@
-package lu.cgi.d4g.services;
+package lu.cgi.d4g.commons.services;
 
 import io.quarkus.mailer.Mail;
 import io.quarkus.mailer.ReactiveMailer;

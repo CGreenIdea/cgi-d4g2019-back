@@ -38,6 +38,7 @@ public class HomeResource {
     public List<HomeEntity> findAll() {
         return homeService.findAll();
     }
+
     @PUT
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)

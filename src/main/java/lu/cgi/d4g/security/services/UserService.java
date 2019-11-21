@@ -1,5 +1,8 @@
 package lu.cgi.d4g.security.services;
 
+import lu.cgi.d4g.commons.services.CsvImportService;
+import lu.cgi.d4g.house.information.entities.HomeEntity;
+import lu.cgi.d4g.house.information.services.HomeService;
 import lu.cgi.d4g.security.dto.UserBean;
 import lu.cgi.d4g.security.entities.UserEntity;
 
@@ -17,37 +20,47 @@ public class UserService {
     private static final String DEFAULT_ROLE = "user";
 
     @Inject
-    EntityManager entityManager;
+    PasswordService passwordService;
 
     @Inject
-    PasswordService passwordService;
+    CsvImportService csvImportService;
+
+    @Inject
+    HomeService homeService;
+
+    @Inject
+    EntityManager entityManager;
 
     @Transactional
     public void createUser(UserBean user, String token) {
-        try {
-            final String username = user.getUsername();
-            final String password = user.getPassword();
-            if (username == null || "".equals(username.trim())) {
-                throw new BadRequestException("Username is mandatory");
-            }
-            if (password == null || "".equals(password.trim())) {
-                throw new BadRequestException("Password is mandatory");
-            }
+        final String username = user.getUsername();
+        final String password = user.getPassword();
+        if (username == null || "".equals(username.trim())) {
+            throw new BadRequestException("Username is mandatory");
+        }
+        if (password == null || "".equals(password.trim())) {
+            throw new BadRequestException("Password is mandatory");
+        }
 
+        final UserEntity entity = new UserEntity();
+        entity.setUserId(username.trim());
+        entity.setRole(DEFAULT_ROLE);
+        entity.setExpiryRegistration(LocalDate.now().plusDays(1));
+        entity.setActive(false);
+        entity.setRegistrationToken(token);
+        encryptAndSavePassword(entity, password);
+
+        entityManager.persist(entity);
+    }
+
+    private void encryptAndSavePassword(UserEntity user, String password) {
+        try {
             final byte[] salt = passwordService.getSalt();
             final byte[] hash = passwordService.encodePassword(password.trim(), salt);
 
-            final UserEntity entity = new UserEntity();
-            entity.setUserId(username.trim());
-            entity.setPassword(encodeHexString(hash));
-            entity.setSalt(encodeHexString(salt));
-            entity.setIterations(passwordService.getIterationCount());
-            entity.setRole(DEFAULT_ROLE);
-            entity.setExpiryRegistration(LocalDate.now().plusDays(1));
-            entity.setActive(false);
-            entity.setRegistrationToken(token);
-
-            entityManager.persist(entity);
+            user.setPassword(encodeHexString(hash));
+            user.setSalt(encodeHexString(salt));
+            user.setIterations(passwordService.getIterationCount());
 
         } catch (InvalidKeySpecException e) {
             throw new BadRequestException("The password could not be encrypted");
@@ -58,6 +71,31 @@ public class UserService {
     public void update(UserEntity user) {
         entityManager.merge(user);
         entityManager.flush();
+    }
+
+    public UserEntity findByRegistrationValidation(String registrationToken) {
+        return entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.registrationToken = :registration", UserEntity.class)
+            .setParameter("registration", registrationToken)
+            .getSingleResult();
+    }
+
+    @Transactional
+    public void importCsvData(String csv) {
+        csvImportService.importCsvData(csv, record -> {
+            UserEntity user = new UserEntity();
+            user.setUserId(record.get("identifiant"));
+            encryptAndSavePassword(user, record.get("password"));
+            user.setRole(DEFAULT_ROLE);
+            user.setActive(true);
+
+            final String homeLabel = record.get("Foyer");
+            if (homeLabel != null && !"".equals(homeLabel.trim())) {
+                final HomeEntity home = homeService.findHomeByLabel(homeLabel);
+                user.setHome(home);
+            }
+
+            return user;
+        });
     }
 
     public UserEntity findByRegistrationToken(String token) {

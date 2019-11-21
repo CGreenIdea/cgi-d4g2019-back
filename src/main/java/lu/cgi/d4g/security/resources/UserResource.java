@@ -3,19 +3,20 @@ package lu.cgi.d4g.security.resources;
 import lu.cgi.d4g.security.dto.UserBean;
 import lu.cgi.d4g.security.entities.UserEntity;
 import lu.cgi.d4g.security.services.UserService;
-import lu.cgi.d4g.services.MailerService;
+import lu.cgi.d4g.commons.services.MailerService;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Context;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -87,4 +88,12 @@ public class UserResource {
         return Response.status(403).build();
     }
 
+    @PUT
+    @Path("/import")
+    @Produces(MediaType.TEXT_PLAIN)
+    @RolesAllowed("admin")
+    public Response importData(String csv) {
+        userService.importCsvData(csv);
+        return Response.ok("Données importées").build();
+    }
 }
