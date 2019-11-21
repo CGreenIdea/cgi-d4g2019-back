@@ -1,7 +1,7 @@
-package lu.cgi.d4g.resources;
+package lu.cgi.d4g.house.information.resources;
 
-import lu.cgi.d4g.entities.LandlordEntity;
-import lu.cgi.d4g.services.LandlordService;
+import lu.cgi.d4g.house.information.entities.HousingEntity;
+import lu.cgi.d4g.house.information.services.HousingService;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -13,24 +13,24 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/landlord")
-public class LandlordResource {
+@Path("/housing")
+public class HousingResource {
 
     @Inject
-    public LandlordService landlordService;
+    public HousingService housingService;
 
     @PUT
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addLandlord(@Valid LandlordEntity landlordEntity) {
-        landlordService.save(landlordEntity);
+    public void addHousing(@Valid HousingEntity housingEntity) {
+        housingService.save(housingEntity);
     }
 
     @GET
     @Path("/findAll")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<LandlordEntity> findAll() {
+    public List<HousingEntity> findAll() {
         String id = ""; // TODO id
-        return landlordService.findAllById(id);
+        return housingService.findAllById(id);
     }
 }

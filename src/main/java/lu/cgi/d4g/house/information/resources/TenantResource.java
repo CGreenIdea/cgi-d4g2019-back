@@ -1,7 +1,7 @@
-package lu.cgi.d4g.resources;
+package lu.cgi.d4g.house.information.resources;
 
-import lu.cgi.d4g.entities.TenantEntity;
-import lu.cgi.d4g.services.TenantService;
+import lu.cgi.d4g.house.information.entities.TenantEntity;
+import lu.cgi.d4g.house.information.services.TenantService;
 
 import javax.inject.Inject;
 import javax.validation.Valid;

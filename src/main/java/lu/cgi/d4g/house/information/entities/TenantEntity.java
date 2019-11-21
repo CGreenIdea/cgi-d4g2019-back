@@ -1,4 +1,4 @@
-package lu.cgi.d4g.entities;
+package lu.cgi.d4g.house.information.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,13 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
-import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "consumption")
-public class ConsumptionEntity {
+@Table(name = "tenant")
+public class TenantEntity {
 
     @Id
     private Long id;
@@ -26,9 +25,9 @@ public class ConsumptionEntity {
     @MapsId
     private HomeEntity home;
 
-    @Column(name = "reading_date")
-    private LocalDate readingDate;
+    @Column(name = "last_name")
+    private String lastName;
 
-    @Column(length = 8)
-    private int energy;
+    @Column(name = "first_name")
+    private String firstName;
 }

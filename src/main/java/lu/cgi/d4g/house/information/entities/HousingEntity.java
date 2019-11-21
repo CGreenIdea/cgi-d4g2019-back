@@ -1,4 +1,4 @@
-package lu.cgi.d4g.entities;
+package lu.cgi.d4g.house.information.entities;
 
 import lombok.Getter;
 import lombok.Setter;

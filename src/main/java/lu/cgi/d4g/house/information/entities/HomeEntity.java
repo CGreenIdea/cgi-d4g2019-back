@@ -1,7 +1,9 @@
-package lu.cgi.d4g.entities;
+package lu.cgi.d4g.house.information.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lu.cgi.d4g.security.entities.UserEntity;
+import lu.cgi.d4g.house.consumption.entities.ConsumptionEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package lu.cgi.d4g.bean;
+package lu.cgi.d4g.house.consumption.dto;
 
 public class ConsumptionBean {
 

@@ -1,6 +1,6 @@
-package lu.cgi.d4g.services;
+package lu.cgi.d4g.house.consumption.services;
 
-import lu.cgi.d4g.entities.ConsumptionEntity;
+import lu.cgi.d4g.house.consumption.entities.ConsumptionEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

@@ -2,7 +2,7 @@ package lu.cgi.d4g.resources;
 
 import io.quarkus.mailer.Mail;
 import io.quarkus.mailer.ReactiveMailer;
-import lu.cgi.d4g.entities.UserEntity;
+import lu.cgi.d4g.security.entities.UserEntity;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

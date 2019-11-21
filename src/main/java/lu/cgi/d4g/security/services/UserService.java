@@ -1,6 +1,6 @@
 package lu.cgi.d4g.security.services;
 
-import lu.cgi.d4g.entities.UserEntity;
+import lu.cgi.d4g.security.entities.UserEntity;
 import lu.cgi.d4g.security.dto.UserBean;
 
 import javax.enterprise.context.ApplicationScoped;

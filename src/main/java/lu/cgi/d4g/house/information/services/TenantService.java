@@ -1,6 +1,6 @@
-package lu.cgi.d4g.services;
+package lu.cgi.d4g.house.information.services;
 
-import lu.cgi.d4g.entities.TenantEntity;
+import lu.cgi.d4g.house.information.entities.TenantEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

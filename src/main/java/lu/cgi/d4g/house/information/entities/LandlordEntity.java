@@ -1,4 +1,4 @@
-package lu.cgi.d4g.entities;
+package lu.cgi.d4g.house.information.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +14,8 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Setter
-@Table(name = "tenant")
-public class TenantEntity {
+@Table(name = "landlord")
+public class LandlordEntity {
 
     @Id
     private Long id;
@@ -30,4 +30,8 @@ public class TenantEntity {
 
     @Column(name = "first_name")
     private String firstName;
+
+    private String company;
+
+    private String address;
 }

@@ -1,8 +1,8 @@
-package lu.cgi.d4g.resources;
+package lu.cgi.d4g.house.consumption.resources;
 
-import lu.cgi.d4g.bean.ConsumptionBean;
-import lu.cgi.d4g.entities.ConsumptionEntity;
-import lu.cgi.d4g.services.ConsumptionService;
+import lu.cgi.d4g.house.consumption.dto.ConsumptionBean;
+import lu.cgi.d4g.house.consumption.entities.ConsumptionEntity;
+import lu.cgi.d4g.house.consumption.services.ConsumptionService;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
