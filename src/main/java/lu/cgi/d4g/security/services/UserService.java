@@ -1,7 +1,7 @@
 package lu.cgi.d4g.security.services;
 
-import lu.cgi.d4g.security.entities.UserEntity;
 import lu.cgi.d4g.security.dto.UserBean;
+import lu.cgi.d4g.security.entities.UserEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @ApplicationScoped
 public class UserService {
@@ -24,7 +23,7 @@ public class UserService {
     PasswordService passwordService;
 
     @Transactional
-    public void createUser(UserBean user, UUID registrationValidation) {
+    public void createUser(UserBean user, String registrationValidation) {
         try {
             final String username = user.getUsername();
             final String password = user.getPassword();
@@ -46,7 +45,7 @@ public class UserService {
             entity.setRole(DEFAULT_ROLE);
             entity.setExpiry(LocalDate.now().plusDays(1));
             entity.setValidation(false);
-            entity.setRegistrationValidation(registrationValidation.toString());
+            entity.setRegistrationValidation(registrationValidation);
 
             entityManager.persist(entity);
 

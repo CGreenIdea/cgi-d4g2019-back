@@ -1,5 +1,6 @@
 package lu.cgi.d4g.security.resources;
 
+import lu.cgi.d4g.services.MailerService;
 import lu.cgi.d4g.security.dto.UserBean;
 import lu.cgi.d4g.security.services.UserService;
 
@@ -18,13 +19,18 @@ public class UserResource {
     @Inject
     UserService userService;
 
+    @Inject
+    MailerService mailerService;
+
     @POST
     @Path("/register")
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerUser(UserBean user) {
-        UUID uuid = UUID.randomUUID();
+        String uuid = UUID.randomUUID().toString();
         userService.createUser(user, uuid);
+        mailerService.sendVerification(user.getUsername(), uuid);
+
         return Response.accepted().build();
     }
 
