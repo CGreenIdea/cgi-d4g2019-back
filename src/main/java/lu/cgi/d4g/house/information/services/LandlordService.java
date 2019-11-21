@@ -20,7 +20,7 @@ public class LandlordService {
     }
 
     public List<LandlordEntity> findAllByUser(String id) {
-        return entityManager.createQuery("SELECT l FROM LandlordEntity l INNER JOIN UserEntity u ON u.home = l.home_id WHERE u.userId = :user", LandlordEntity.class)
+        return entityManager.createQuery("SELECT l FROM LandlordEntity l INNER JOIN UserEntity u ON u.home = l.home WHERE u.userId = :user", LandlordEntity.class)
             .setParameter("user", id)
             .getResultList();
     }

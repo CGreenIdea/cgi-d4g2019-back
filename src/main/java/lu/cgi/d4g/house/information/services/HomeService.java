@@ -1,5 +1,6 @@
 package lu.cgi.d4g.house.information.services;
 
+import lu.cgi.d4g.commons.services.CsvImportService;
 import lu.cgi.d4g.house.information.entities.HomeEntity;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -21,6 +22,9 @@ import java.util.stream.StreamSupport;
 public class HomeService {
 
     @Inject
+    CsvImportService csvImportService;
+
+    @Inject
     EntityManager entityManager;
 
     public void save(@Valid HomeEntity homeEntity) {
@@ -29,7 +33,7 @@ public class HomeService {
     }
 
     public List<HomeEntity> findByUser(String userId) {
-        return entityManager.createQuery("SELECT h FROM HomeEntity h INNER JOIN UserEntity u ON u.home = h.id WHERE u.userId = :user", HomeEntity.class)
+        return entityManager.createQuery("SELECT h FROM HomeEntity h INNER JOIN UserEntity u ON h = u.home WHERE u.userId = :user", HomeEntity.class)
             .setParameter("user", userId)
             .getResultList();
     }
@@ -41,9 +45,18 @@ public class HomeService {
 
     @Transactional
     public void importCsvData(String csv) {
-        importCsvData(csv, record -> {
+        csvImportService.importCsvData(csv, record -> {
             HomeEntity home = new HomeEntity();
             home.setLabel(record.get("Foyer"));
+            home.setType("0".equals(record.get("type")));
+            home.setSurface(Integer.parseInt(record.get("Surface")));
+            home.setNbRooms(Integer.parseInt(record.get("Pièces")));
+            home.setHeatSource(record.get("Chauffage"));
+            home.setConstructionYear(Integer.parseInt(record.get("Année de construction")));
+            home.setStreetNb(record.get("n° de voie"));
+            home.setStreet(record.get("Voie 1"));
+            home.setZipCode(record.get("code postal"));
+            home.setCity(record.get("ville"));
             return home;
         });
     }
