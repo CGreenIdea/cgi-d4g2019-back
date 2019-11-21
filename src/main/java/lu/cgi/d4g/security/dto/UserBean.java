@@ -25,4 +25,11 @@ public class UserBean {
      * This should be only available for a new user creation request.
      */
     private String password;
+
+    /**
+     * The requested password confirmation.
+     * <p>
+     * This should be only available for a new user creation request.
+     */
+    private String passwordConfirm;
 }

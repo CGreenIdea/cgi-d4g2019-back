@@ -23,6 +23,7 @@ public class HomeService {
     @Inject
     EntityManager entityManager;
 
+    @Transactional
     public void save(@Valid HomeEntity homeEntity) {
         entityManager.persist(homeEntity);
         entityManager.flush();

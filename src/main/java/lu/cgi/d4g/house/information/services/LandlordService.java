@@ -5,6 +5,7 @@ import lu.cgi.d4g.house.information.entities.LandlordEntity;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class LandlordService {
     @Inject
     EntityManager entityManager;
 
+    @Transactional
     public void save(@Valid LandlordEntity landlordEntity) {
         entityManager.persist(landlordEntity);
         entityManager.flush();

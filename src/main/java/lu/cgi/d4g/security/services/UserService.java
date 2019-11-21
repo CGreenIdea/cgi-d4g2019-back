@@ -23,7 +23,7 @@ public class UserService {
     PasswordService passwordService;
 
     @Transactional
-    public void createUser(UserBean user, String registrationToken) {
+    public void createUser(UserBean user, String token) {
         try {
             final String username = user.getUsername();
             final String password = user.getPassword();
@@ -45,7 +45,7 @@ public class UserService {
             entity.setRole(DEFAULT_ROLE);
             entity.setExpiryRegistration(LocalDate.now().plusDays(1));
             entity.setActive(false);
-            entity.setRegistrationToken(registrationToken);
+            entity.setRegistrationToken(token);
 
             entityManager.persist(entity);
 
@@ -54,15 +54,28 @@ public class UserService {
         }
     }
 
-    public UserEntity findByRegistrationValidation(String registrationToken) {
-        return entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.registrationToken = :registration", UserEntity.class)
-            .setParameter("registration", registrationToken)
-            .getSingleResult();
-    }
-
+    @Transactional
     public void update(UserEntity user) {
         entityManager.merge(user);
         entityManager.flush();
+    }
+
+    public UserEntity findByRegistrationToken(String token) {
+        return entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.registrationToken = :token", UserEntity.class)
+            .setParameter("token", token)
+            .getSingleResult();
+    }
+
+    public UserEntity findByResetToken(String token) {
+        return entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.resetToken = :token", UserEntity.class)
+            .setParameter("token", token)
+            .getSingleResult();
+    }
+
+    public UserEntity findByUserId(String userId) {
+        return entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.userId = :user", UserEntity.class)
+            .setParameter("user", userId)
+            .getSingleResult();
     }
 
     private String encodeHexString(byte[] byteArray) {
