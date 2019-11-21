@@ -1,6 +1,11 @@
 package lu.cgi.d4g.security.resources;
 
 import lu.cgi.d4g.commons.services.MailerService;
+import lu.cgi.d4g.house.information.dto.InformationBean;
+import lu.cgi.d4g.house.information.entities.HomeEntity;
+import lu.cgi.d4g.house.information.services.HomeService;
+import lu.cgi.d4g.house.information.services.LandlordService;
+import lu.cgi.d4g.house.information.services.TenantService;
 import lu.cgi.d4g.security.dto.UserBean;
 import lu.cgi.d4g.security.entities.UserEntity;
 import lu.cgi.d4g.security.services.UserService;
@@ -29,16 +34,30 @@ public class UserResource {
     UserService userService;
 
     @Inject
+    LandlordService landlordService;
+
+    @Inject
+    TenantService tenantService;
+
+    @Inject
+    HomeService homeService;
+
+    @Inject
     MailerService mailerService;
 
     @POST
     @Path("/register")
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response registerUser(UserBean user) {
+    public Response registerUser(InformationBean information) {
+        UserBean user = information.getUser();
+
         if (user.getPassword().equals(user.getPasswordConfirm())) {
             String token = UUID.randomUUID().toString();
-            userService.createUser(user, token);
+            HomeEntity home = homeService.createHome(information.getHome());
+            userService.createUser(user, home, token);
+            tenantService.createTenant(information.getTenant(), home);
+            landlordService.createLandlord(information.getLandlord(), home);
 
             return mailerService.sendVerification(user.getUsername(), token).toCompletableFuture().join();
         } else {

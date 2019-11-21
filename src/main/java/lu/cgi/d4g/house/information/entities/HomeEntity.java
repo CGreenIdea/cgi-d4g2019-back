@@ -22,7 +22,8 @@ public class HomeEntity {
 
     private String label;
 
-    private boolean type;
+    @Column(length = 1)
+    private short type;
 
     @Column(length = 4)
     private int surface;

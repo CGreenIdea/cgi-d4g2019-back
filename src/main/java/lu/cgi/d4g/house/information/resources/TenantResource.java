@@ -5,10 +5,7 @@ import lu.cgi.d4g.house.information.services.TenantService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.validation.Valid;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -21,13 +18,6 @@ public class TenantResource {
 
     @Inject
     public TenantService tenantService;
-
-    @PUT
-    @Path("/create")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void addTenant(@Valid TenantEntity tenantEntity) {
-        tenantService.save(tenantEntity);
-    }
 
     @GET
     @Path("/findAll")

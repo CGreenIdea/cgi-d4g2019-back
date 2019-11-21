@@ -32,7 +32,7 @@ public class UserService {
     EntityManager entityManager;
 
     @Transactional
-    public void createUser(UserBean user, String token) {
+    public void createUser(UserBean user, HomeEntity home, String token) {
         final String username = user.getUsername();
         final String password = user.getPassword();
         if (username == null || "".equals(username.trim())) {
@@ -48,6 +48,7 @@ public class UserService {
         entity.setExpiryRegistration(LocalDate.now().plusDays(1));
         entity.setActive(false);
         entity.setRegistrationToken(token);
+        entity.setHome(home);
         encryptAndSavePassword(entity, password);
 
         entityManager.persist(entity);

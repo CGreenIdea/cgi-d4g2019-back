@@ -5,8 +5,6 @@ import lu.cgi.d4g.house.information.services.HomeService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.validation.Valid;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -37,14 +35,6 @@ public class HomeResource {
     @RolesAllowed("admin")
     public List<HomeEntity> findAll() {
         return homeService.findAll();
-    }
-
-    @PUT
-    @Path("/create")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"user", "admin"})
-    public void addHome(@Valid HomeEntity homeEntity) {
-        homeService.save(homeEntity);
     }
 
     @PUT

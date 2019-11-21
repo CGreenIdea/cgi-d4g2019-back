@@ -1,6 +1,7 @@
 package lu.cgi.d4g.house.information.services;
 
 import lu.cgi.d4g.commons.services.CsvImportService;
+import lu.cgi.d4g.house.information.dto.HomeBean;
 import lu.cgi.d4g.house.information.entities.HomeEntity;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -10,7 +11,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import javax.ws.rs.BadRequestException;
 import java.io.IOException;
 import java.io.StringReader;
@@ -28,9 +28,24 @@ public class HomeService {
     EntityManager entityManager;
 
     @Transactional
-    public void save(@Valid HomeEntity homeEntity) {
-        entityManager.persist(homeEntity);
+    public HomeEntity createHome(HomeBean homeBean) {
+        HomeEntity home = new HomeEntity();
+
+        home.setCity(homeBean.getCity());
+        home.setConstructionYear(homeBean.getConstructionYear());
+        home.setHeatSource(homeBean.getHeatSource());
+        home.setLabel(homeBean.getLabel());
+        home.setNbRooms(homeBean.getNbRooms());
+        home.setStreet(homeBean.getStreet());
+        home.setStreetNb(homeBean.getStreetNb());
+        home.setSurface(homeBean.getSurface());
+        home.setZipCode(homeBean.getZipCode());
+        home.setType((short) (homeBean.getType() != 1 ? 0 : 1));
+
+        entityManager.persist(home);
         entityManager.flush();
+
+        return home;
     }
 
     public List<HomeEntity> findByUser(String userId) {
@@ -58,7 +73,7 @@ public class HomeService {
         csvImportService.importCsvData(csv, record -> {
             HomeEntity home = new HomeEntity();
             home.setLabel(record.get("Foyer"));
-            home.setType("0".equals(record.get("type")));
+            home.setType(Short.parseShort(record.get("type")));
             home.setSurface(Integer.parseInt(record.get("Surface")));
             home.setNbRooms(Integer.parseInt(record.get("Pièces")));
             home.setHeatSource(record.get("Chauffage"));
