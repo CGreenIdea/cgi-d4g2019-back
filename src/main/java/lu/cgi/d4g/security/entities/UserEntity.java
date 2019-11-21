@@ -39,14 +39,21 @@ public class UserEntity {
 
     private int iterations;
 
-    private boolean validation;
+    private boolean active;
 
-    private LocalDate expiry;
+    @Column(name = "registration_token", length = 36)
+    private String registrationToken;
+
+    @Column(name = "expiry_registration")
+    private LocalDate expiryRegistration;
+
+    @Column(name = "reset_token", length = 36)
+    private String resetToken;
+
+    @Column(name = "expiry_reset")
+    private LocalDate expiryReset;
 
     private String role;
-
-    @Column(name = "registration_validation", length = 36)
-    private String registrationValidation;
 
     public UserEntity() {
     }

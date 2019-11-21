@@ -12,8 +12,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.time.LocalDate;
 import java.util.UUID;
 import java.util.concurrent.CompletionStage;
@@ -39,14 +41,14 @@ public class UserResource {
     }
 
     @GET
-    @Path("/validation/{register}")
-    public Response registerUser(@PathParam("register") String register) {
-        UserEntity user = userService.findByRegistrationValidation(register);
+    @Path("/registration/{token}")
+    public Response registerUser(@PathParam("token") String token) {
+        UserEntity user = userService.findByRegistrationValidation(token);
 
-        if (user != null && !user.isValidation() && !user.getExpiry().isAfter(LocalDate.now())) {
-            user.setRegistrationValidation(null);
-            user.setValidation(true);
-            user.setExpiry(null);
+        if (user != null && !user.isActive() && !user.getExpiryRegistration().isAfter(LocalDate.now())) {
+            user.setRegistrationToken(null);
+            user.setActive(true);
+            user.setExpiryRegistration(null);
             userService.update(user);
 
             return Response.status(200).build();

@@ -23,7 +23,7 @@ public class UserService {
     PasswordService passwordService;
 
     @Transactional
-    public void createUser(UserBean user, String registrationValidation) {
+    public void createUser(UserBean user, String registrationToken) {
         try {
             final String username = user.getUsername();
             final String password = user.getPassword();
@@ -43,9 +43,9 @@ public class UserService {
             entity.setSalt(encodeHexString(salt));
             entity.setIterations(passwordService.getIterationCount());
             entity.setRole(DEFAULT_ROLE);
-            entity.setExpiry(LocalDate.now().plusDays(1));
-            entity.setValidation(false);
-            entity.setRegistrationValidation(registrationValidation);
+            entity.setExpiryRegistration(LocalDate.now().plusDays(1));
+            entity.setActive(false);
+            entity.setRegistrationToken(registrationToken);
 
             entityManager.persist(entity);
 
@@ -54,9 +54,9 @@ public class UserService {
         }
     }
 
-    public UserEntity findByRegistrationValidation(String registrationValidation) {
-        return entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.registrationValidation = :registration", UserEntity.class)
-            .setParameter("registration", registrationValidation)
+    public UserEntity findByRegistrationValidation(String registrationToken) {
+        return entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.registrationToken = :registration", UserEntity.class)
+            .setParameter("registration", registrationToken)
             .getSingleResult();
     }
 
