@@ -19,9 +19,14 @@ public class TenantService {
         entityManager.flush();
     }
 
-    public List<TenantEntity> findAllById(String id) {
-        return entityManager.createQuery("SELECT t FROM TenantEntity t WHERE t.home_id = :id", TenantEntity.class)
-            .setParameter("id", id)
+    public List<TenantEntity> findAllByUser(String id) {
+        return entityManager.createQuery("SELECT t FROM TenantEntity t INNER JOIN UserEntity u ON u.home = t.home WHERE u.userId = :user", TenantEntity.class)
+            .setParameter("user", id)
+            .getResultList();
+    }
+
+    public List<TenantEntity> findAll() {
+        return entityManager.createQuery("SELECT t FROM TenantEntity t", TenantEntity.class)
             .getResultList();
     }
 

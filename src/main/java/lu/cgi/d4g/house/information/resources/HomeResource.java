@@ -3,6 +3,7 @@ package lu.cgi.d4g.house.information.resources;
 import lu.cgi.d4g.house.information.entities.HomeEntity;
 import lu.cgi.d4g.house.information.services.HomeService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -29,6 +30,7 @@ public class HomeResource {
     @GET
     @Path("/findAll")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("admin")
     public List<HomeEntity> findAll() {
         return homeService.findAll();
     }
