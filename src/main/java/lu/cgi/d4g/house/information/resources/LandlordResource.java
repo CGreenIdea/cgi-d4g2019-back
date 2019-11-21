@@ -31,7 +31,7 @@ public class LandlordResource {
     }
 
     @GET
-    @Path("/findAll")
+    @Path("/mine")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"user", "admin"})
     public List<LandlordEntity> findAll(@Context SecurityContext securityContext) {
@@ -39,7 +39,7 @@ public class LandlordResource {
     }
 
     @GET
-    @Path("/findAllBack")
+    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("admin")
     public List<LandlordEntity> findAllBack() {
