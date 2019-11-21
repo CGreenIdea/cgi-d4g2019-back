@@ -1,0 +1,24 @@
+# Dockerfile for a Debian-based OS
+# Adapt according to the OS you target for deployment
+FROM debian:9.11
+
+ARG graalvm_version=19.2.1
+
+# Install required essentials from APT
+RUN apt update && apt upgrade -y && \
+  apt install -y curl build-essential libz-dev zlib1g-dev maven
+
+# Install and prepare GraalVM
+ENV GRAALVM_HOME=/graalvm
+RUN curl https://github.com/oracle/graal/releases/download/vm-${graalvm_version}/graalvm-ce-linux-amd64-${graalvm_version}.tar.gz -O -J -L && \
+   tar xfz graalvm-ce-linux-amd64-${graalvm_version}.tar.gz && \
+   mv graalvm-ce-${graalvm_version} ${GRAALVM_HOME} && \
+   rm graalvm-ce-linux-amd64-${graalvm_version}.tar.gz
+
+ENV JAVA_HOME=$GRAALVM_HOME
+ENV PATH=PATH=${GRAALVM_HOME}/bin:$PATH
+
+RUN ${GRAALVM_HOME}/bin/gu install native-image
+
+VOLUME /project
+WORKDIR /project
