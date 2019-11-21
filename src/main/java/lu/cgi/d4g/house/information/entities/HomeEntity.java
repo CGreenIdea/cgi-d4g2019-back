@@ -2,16 +2,12 @@ package lu.cgi.d4g.house.information.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import lu.cgi.d4g.security.entities.UserEntity;
-import lu.cgi.d4g.house.consumption.entities.ConsumptionEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
 
 @Entity
 @Getter
