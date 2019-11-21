@@ -1,5 +1,6 @@
 package lu.cgi.d4g.house.consumption.resources;
 
+import lu.cgi.d4g.house.consumption.dto.EnergyReading;
 import lu.cgi.d4g.house.consumption.entities.ConsumptionEntity;
 import lu.cgi.d4g.house.consumption.services.ConsumptionService;
 
@@ -18,6 +19,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/consumption")
 public class ConsumptionResource {
@@ -36,16 +38,16 @@ public class ConsumptionResource {
     @Path("/range/{dateStart}/{dateEnd}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<ConsumptionEntity> getRangeConsumption(
+    public List<EnergyReading> getRangeConsumption(
         @Context SecurityContext securityContext,
         @PathParam("dateStart") String dateStart,
         @PathParam("dateEnd") String dateEnd
     ) {
-        return consumptionService.getRangeConsumptionByUser(
+        return parseConsumptions(consumptionService.getRangeConsumptionByUser(
             securityContext.getUserPrincipal().getName(),
             LocalDate.parse(dateStart),
             LocalDate.parse(dateEnd)
-        );
+        ));
     }
 
     @GET
@@ -60,8 +62,8 @@ public class ConsumptionResource {
     @Path("/mine")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"user", "admin"})
-    public List<ConsumptionEntity> findAll(@Context SecurityContext securityContext) {
-        return consumptionService.findAllByUser(securityContext.getUserPrincipal().getName());
+    public List<EnergyReading> findAll(@Context SecurityContext securityContext) {
+        return parseConsumptions(consumptionService.findAllByUser(securityContext.getUserPrincipal().getName()));
     }
 
     @GET
@@ -79,5 +81,14 @@ public class ConsumptionResource {
     public Response importData(String csv) {
         consumptionService.importCsvData(csv);
         return Response.ok("Données importées").build();
+    }
+
+    private List<EnergyReading> parseConsumptions(List<ConsumptionEntity> readings) {
+        return readings.stream()
+            .map(r -> EnergyReading.builder()
+                .date(r.getReadingDate())
+                .energy(r.getEnergy())
+                .build())
+            .collect(Collectors.toList());
     }
 }
