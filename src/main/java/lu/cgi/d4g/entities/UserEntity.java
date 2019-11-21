@@ -29,8 +29,16 @@ public class UserEntity {
     @Column(name = "user_id")
     private String userId;
 
-    @Column(columnDefinition = "binary(60)")
+    @Column(columnDefinition = "binary(32)")
     private String password;
 
+    @Column(columnDefinition = "binary(24)")
+    private String salt;
+
+    private int iterations;
+
     private String role;
+
+    public UserEntity() {
+    }
 }
