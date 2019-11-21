@@ -32,6 +32,7 @@
         <quarkus.version>0.28.1</quarkus.version>
 
         <!-- Dependencies version -->
+        <commons-csv.version>1.7</commons-csv.version>
         <lombok.version>1.18.10</lombok.version>
 
         <!-- Other plugins versions -->
@@ -88,6 +89,13 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-mailer</artifactId>
+        </dependency>
+
+        <!-- Commons CSV -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>${commons-csv.version}</version>
         </dependency>
 
         <!-- Developer tools -->

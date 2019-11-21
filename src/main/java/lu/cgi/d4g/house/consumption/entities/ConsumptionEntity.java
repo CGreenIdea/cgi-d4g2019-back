@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
@@ -24,7 +23,6 @@ public class ConsumptionEntity {
 
     @ManyToOne
     @JoinColumn(name = "home_id")
-    @MapsId
     private HomeEntity home;
 
     @Column(name = "reading_date")
