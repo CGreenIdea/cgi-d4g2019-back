@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
+import java.util.List;
 
 @ApplicationScoped
 public class LandlordService {
@@ -17,4 +18,11 @@ public class LandlordService {
         entityManager.persist(landlordEntity);
         entityManager.flush();
     }
+
+    public List<LandlordEntity> findAllById(String id) {
+        return entityManager.createQuery("SELECT l FROM landlord l WHERE l.home_id = :id", LandlordEntity.class)
+            .setParameter("id", id)
+            .getResultList();
+    }
+
 }

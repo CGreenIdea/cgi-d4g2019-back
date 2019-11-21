@@ -28,11 +28,19 @@ public class ConsumptionResource {
     }
 
     @GET
-    @Path("/getRangeConsumptionByUser")
+    @Path("/getRangeConsumption")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<ConsumptionEntity> getRangeConsumptionByUser(ConsumptionBean consumptionBean) {
-        String user = ""; // TODO userId
-        return consumptionService.getRangeConsumptionByUser(user, consumptionBean.getDateStart(), consumptionBean.getDateEnd());
+    public List<ConsumptionEntity> getRangeConsumption(ConsumptionBean consumptionBean) {
+        String id = ""; // TODO id
+        return consumptionService.getRangeConsumptionById(id, consumptionBean.getDateStart(), consumptionBean.getDateEnd());
+    }
+
+    @GET
+    @Path("/findAll")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ConsumptionEntity> findAll() {
+        String id = ""; // TODO id
+        return consumptionService.findAllById(id);
     }
 }

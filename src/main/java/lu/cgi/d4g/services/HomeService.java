@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
+import java.util.List;
 
 @ApplicationScoped
 public class HomeService {
@@ -17,4 +18,10 @@ public class HomeService {
         entityManager.persist(homeEntity);
         entityManager.flush();
     }
+
+    public List<HomeEntity> findAll() {
+        return entityManager.createQuery("SELECT h FROM home h order by h.label", HomeEntity.class)
+            .getResultList();
+    }
+
 }
