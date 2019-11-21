@@ -1,10 +1,5 @@
 package lu.cgi.d4g.security.services;
 
-import org.wildfly.security.WildFlyElytronBaseProvider;
-import org.wildfly.security.WildFlyElytronHttpBasicProvider;
-import org.wildfly.security.WildFlyElytronProvider;
-import org.wildfly.security.key.WildFlyElytronKeyProvider;
-import org.wildfly.security.keystore.WildFlyElytronKeyStoreProvider;
 import org.wildfly.security.password.PasswordFactory;
 import org.wildfly.security.password.WildFlyElytronPasswordProvider;
 import org.wildfly.security.password.interfaces.BCryptPassword;

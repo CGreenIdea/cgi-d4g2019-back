@@ -9,8 +9,6 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Base64;
-import java.util.Base64.Encoder;
 
 @ApplicationScoped
 public class UserService {
@@ -57,9 +55,9 @@ public class UserService {
     }
 
     private String encodeHexString(byte[] byteArray) {
-        StringBuffer hexStringBuffer = new StringBuffer();
-        for (int i = 0; i < byteArray.length; i++) {
-            hexStringBuffer.append(byteToHex(byteArray[i]));
+        StringBuilder hexStringBuffer = new StringBuilder();
+        for (byte b : byteArray) {
+            hexStringBuffer.append(byteToHex(b));
         }
         return hexStringBuffer.toString();
     }
