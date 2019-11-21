@@ -54,6 +54,17 @@ public class UserService {
         }
     }
 
+    public UserEntity findByRegistrationValidation(String registrationValidation) {
+        return entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.registrationValidation = :registration", UserEntity.class)
+            .setParameter("registration", registrationValidation)
+            .getSingleResult();
+    }
+
+    public void update(UserEntity user) {
+        entityManager.merge(user);
+        entityManager.flush();
+    }
+
     private String encodeHexString(byte[] byteArray) {
         StringBuilder hexStringBuffer = new StringBuilder();
         for (byte b : byteArray) {
