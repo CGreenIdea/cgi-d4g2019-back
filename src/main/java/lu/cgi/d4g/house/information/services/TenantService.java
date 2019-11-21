@@ -1,5 +1,7 @@
 package lu.cgi.d4g.house.information.services;
 
+import lu.cgi.d4g.commons.services.CsvImportService;
+import lu.cgi.d4g.house.information.entities.HomeEntity;
 import lu.cgi.d4g.house.information.entities.TenantEntity;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -7,10 +9,17 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.ws.rs.BadRequestException;
 import java.util.List;
 
 @ApplicationScoped
 public class TenantService {
+
+    @Inject
+    HomeService homeService;
+
+    @Inject
+    CsvImportService csvImportService;
 
     @Inject
     EntityManager entityManager;
@@ -32,4 +41,23 @@ public class TenantService {
             .getResultList();
     }
 
+    @Transactional
+    public void importCsvData(String csv) {
+        csvImportService.importCsvData(csv, record -> {
+            TenantEntity tenant = new TenantEntity();
+
+            final String homeLabel = record.get("Foyer");
+            if (homeLabel == null || "".equals(homeLabel.trim())) {
+                throw new BadRequestException("Inconsistent data");
+            }
+
+            final HomeEntity home = homeService.findHomeByLabel(homeLabel);
+            tenant.setHome(home);
+
+            tenant.setFirstName(record.get("Prénom"));
+            tenant.setLastName(record.get("Nom"));
+
+            return tenant;
+        });
+    }
 }

@@ -13,6 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 
@@ -43,5 +44,14 @@ public class TenantResource {
     @RolesAllowed("admin")
     public List<TenantEntity> findAllBack() {
         return tenantService.findAll();
+    }
+
+    @PUT
+    @Path("/import")
+    @Produces(MediaType.TEXT_PLAIN)
+    @RolesAllowed("admin")
+    public Response importData(String csv) {
+        tenantService.importCsvData(csv);
+        return Response.ok("Données importées").build();
     }
 }
