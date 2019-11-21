@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -37,6 +38,10 @@ public class UserEntity {
     private String salt;
 
     private int iterations;
+
+    private boolean validation;
+
+    private LocalDate expiry;
 
     private String role;
 

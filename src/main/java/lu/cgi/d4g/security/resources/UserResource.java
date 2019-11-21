@@ -23,7 +23,7 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerUser(UserBean user) {
         userService.createUser(user);
-        // FIXME: created
         return Response.accepted().build();
     }
+
 }
