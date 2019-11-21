@@ -20,7 +20,7 @@ public class LandlordService {
     }
 
     public List<LandlordEntity> findAllById(String id) {
-        return entityManager.createQuery("SELECT l FROM landlord l WHERE l.home_id = :id", LandlordEntity.class)
+        return entityManager.createQuery("SELECT l FROM LandlordEntity l WHERE l.home_id = :id", LandlordEntity.class)
             .setParameter("id", id)
             .getResultList();
     }
