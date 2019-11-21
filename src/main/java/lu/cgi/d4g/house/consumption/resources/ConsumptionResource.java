@@ -57,7 +57,7 @@ public class ConsumptionResource {
     }
 
     @GET
-    @Path("/findAll")
+    @Path("/mine")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"user", "admin"})
     public List<ConsumptionEntity> findAll(@Context SecurityContext securityContext) {
@@ -65,8 +65,9 @@ public class ConsumptionResource {
     }
 
     @GET
-    @Path("/findAllBack")
+    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("admin")
     public List<ConsumptionEntity> findAllBack() {
         return consumptionService.findAll();
     }
