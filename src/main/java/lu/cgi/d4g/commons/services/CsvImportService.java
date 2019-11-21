@@ -27,7 +27,7 @@ public class CsvImportService {
     EntityManager entityManager;
 
     @Transactional
-    public void importCsvData(String csv, Function<CSVRecord, HomeEntity> mapper) {
+    public void importCsvData(String csv, Function<CSVRecord, ?> mapper) {
         try (
             CSVParser csvParser = new CSVParser(new StringReader(csv), CSVFormat.DEFAULT.withFirstRecordAsHeader().withDelimiter(';'))
         ) {

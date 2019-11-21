@@ -33,14 +33,23 @@ public class HomeService {
     }
 
     public List<HomeEntity> findByUser(String userId) {
-        return entityManager.createQuery("SELECT h FROM HomeEntity h INNER JOIN UserEntity u ON h = u.home WHERE u.userId = :user", HomeEntity.class)
+        return entityManager
+            .createQuery("SELECT h FROM HomeEntity h INNER JOIN UserEntity u ON h = u.home WHERE u.userId = :user", HomeEntity.class)
             .setParameter("user", userId)
             .getResultList();
     }
 
     public List<HomeEntity> findAll() {
-        return entityManager.createQuery("SELECT h FROM HomeEntity h", HomeEntity.class)
+        return entityManager
+            .createQuery("SELECT h FROM HomeEntity h", HomeEntity.class)
             .getResultList();
+    }
+
+    public HomeEntity findHomeByLabel(String label) {
+        return entityManager
+            .createQuery("SELECT h FROM HomeEntity h WHERE h.label = :label", HomeEntity.class)
+            .setParameter("label", label)
+            .getSingleResult();
     }
 
     @Transactional
