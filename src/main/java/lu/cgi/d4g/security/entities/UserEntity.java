@@ -45,6 +45,9 @@ public class UserEntity {
 
     private String role;
 
+    @Column(name = "registration_validation", length = 36)
+    private String registrationValidation;
+
     public UserEntity() {
     }
 }

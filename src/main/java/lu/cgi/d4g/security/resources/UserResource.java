@@ -10,6 +10,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.UUID;
 
 @Path("/user")
 public class UserResource {
@@ -22,7 +23,8 @@ public class UserResource {
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerUser(UserBean user) {
-        userService.createUser(user);
+        UUID uuid = UUID.randomUUID();
+        userService.createUser(user, uuid);
         return Response.accepted().build();
     }
 

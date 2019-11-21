@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @ApplicationScoped
 public class UserService {
@@ -23,7 +24,7 @@ public class UserService {
     PasswordService passwordService;
 
     @Transactional
-    public void createUser(UserBean user) {
+    public void createUser(UserBean user, UUID registrationValidation) {
         try {
             final String username = user.getUsername();
             final String password = user.getPassword();
@@ -45,6 +46,7 @@ public class UserService {
             entity.setRole(DEFAULT_ROLE);
             entity.setExpiry(LocalDate.now().plusDays(1));
             entity.setValidation(false);
+            entity.setRegistrationValidation(registrationValidation.toString());
 
             entityManager.persist(entity);
 
