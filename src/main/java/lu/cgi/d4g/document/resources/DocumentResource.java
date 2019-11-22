@@ -28,9 +28,6 @@ public class DocumentResource {
     }
 
     @GET
-    @Path("/download")
-
-    @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("admin")
