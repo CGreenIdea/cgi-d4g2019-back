@@ -1,4 +1,6 @@
-package lu.cgi.d4g;
+package lu.cgi.d4g.document.services;
+
+import lu.cgi.d4g.document.entities.DocumentEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

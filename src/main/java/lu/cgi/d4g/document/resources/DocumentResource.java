@@ -1,4 +1,7 @@
-package lu.cgi.d4g;
+package lu.cgi.d4g.document.resources;
+
+import lu.cgi.d4g.document.services.DocumentService;
+import lu.cgi.d4g.document.entities.DocumentEntity;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
