@@ -6,6 +6,7 @@ import lu.cgi.d4g.house.information.entities.HomeEntity;
 import lu.cgi.d4g.house.information.services.HomeService;
 import lu.cgi.d4g.house.information.services.LandlordService;
 import lu.cgi.d4g.house.information.services.TenantService;
+import lu.cgi.d4g.security.dto.ResetBean;
 import lu.cgi.d4g.security.dto.UserBean;
 import lu.cgi.d4g.security.entities.UserEntity;
 import lu.cgi.d4g.security.services.UserService;
@@ -80,12 +81,18 @@ public class UserResource {
         return mailerService.sendReset(userName, token).toCompletableFuture().join();
     }
 
-    @GET
-    @Path("/reset/{token}")
-    public Response changePassword(@PathParam("token") String token) {
-        UserEntity user = userService.findByResetToken(token);
+    @POST
+    @Path("/change-password")
+    @PermitAll
+    public Response changePassword(ResetBean resetBean) {
+        UserEntity user = userService.findByResetToken(resetBean.getToken());
 
-        if (user != null && user.getExpiryReset() != null && !user.getExpiryReset().isAfter(LocalDate.now())) {
+        if (user != null && user.getExpiryReset() != null && !user.getExpiryReset().isAfter(LocalDate.now()) && resetBean.getPassword().equals(resetBean.getPasswordConfirm())) {
+            user.setPassword(resetBean.getPassword());
+            user.setExpiryReset(null);
+            user.setResetToken(null);
+            userService.update(user);
+
             return Response.status(200).build();
         }
 
