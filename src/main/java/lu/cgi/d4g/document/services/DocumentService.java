@@ -6,6 +6,7 @@ import lu.cgi.d4g.house.information.entities.HomeEntity;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.List;
@@ -27,6 +28,18 @@ public class DocumentService {
         return entityManager
             .createQuery("SELECT d FROM DocumentEntity d", DocumentEntity.class)
             .getResultList();
+    }
+
+    public DocumentEntity findByIdAndUsername(long docId, String userId) {
+        try {
+            return entityManager
+                .createQuery("SELECT d FROM DocumentEntity d INNER JOIN UserEntity u ON d = u.home WHERE u.userId = :user AND d.id = :id", DocumentEntity.class)
+                .setParameter("id", docId)
+                .setParameter("user", userId)
+                .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Transactional
