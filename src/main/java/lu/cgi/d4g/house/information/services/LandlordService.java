@@ -59,7 +59,7 @@ public class LandlordService {
                 throw new BadRequestException("Inconsistent data");
             }
 
-            final HomeEntity home = homeService.findHomeByLabel(homeLabel);
+            final HomeEntity home = homeService.findByLabel(homeLabel);
             landlord.setHome(home);
 
             landlord.setFirstName(record.get("Prénom"));

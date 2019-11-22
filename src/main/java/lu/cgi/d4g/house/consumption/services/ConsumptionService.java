@@ -66,7 +66,7 @@ public class ConsumptionService {
         csvImportService.importAndFlattenCsvData(csv, record -> {
             final String homeLabel = record.get("Foyer");
             if (homeLabel != null && !"".equals(homeLabel.trim())) {
-                final HomeEntity home = homeService.findHomeByLabel(homeLabel);
+                final HomeEntity home = homeService.findByLabel(homeLabel);
                 if (home != null) {
                     return record.toMap().entrySet().stream()
                         .skip(1L)

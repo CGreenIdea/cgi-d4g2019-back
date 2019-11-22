@@ -91,7 +91,7 @@ public class UserService {
 
             final String homeLabel = record.get("Foyer");
             if (homeLabel != null && !"".equals(homeLabel.trim())) {
-                final HomeEntity home = homeService.findHomeByLabel(homeLabel);
+                final HomeEntity home = homeService.findByLabel(homeLabel);
                 user.setHome(home);
             }
 
