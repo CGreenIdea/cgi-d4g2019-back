@@ -83,6 +83,7 @@ public class UserResource {
 
     @POST
     @Path("/change-password")
+    @PermitAll
     public Response changePassword(ResetBean resetBean) {
         UserEntity user = userService.findByResetToken(resetBean.getToken());
 
