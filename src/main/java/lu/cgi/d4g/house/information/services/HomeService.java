@@ -61,6 +61,10 @@ public class HomeService {
             .getResultList();
     }
 
+    public HomeEntity findById(long id) {
+        return entityManager.find(HomeEntity.class, id);
+    }
+
     public HomeEntity findByLabel(String label) {
         return entityManager
             .createQuery("SELECT h FROM HomeEntity h WHERE h.label = :label", HomeEntity.class)

@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -28,13 +28,13 @@ public class DocumentEntity {
     @JoinColumn(name = "home_id")
     private HomeEntity home;
 
+    private String title;
+
     private String filename;
 
     @Column(name = "local_name", length = 36)
     private String localName;
 
     @Column(name = "creation_date")
-    private LocalDateTime creationDate;
-
-    private String title;
+    private Instant creationDate;
 }
