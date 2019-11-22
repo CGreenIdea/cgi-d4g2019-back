@@ -35,4 +35,6 @@ public class DocumentEntity {
 
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
+
+    private String title;
 }
