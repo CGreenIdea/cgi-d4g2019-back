@@ -6,13 +6,14 @@ import lu.cgi.d4g.house.information.entities.HomeEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -24,9 +25,11 @@ public class DocumentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "home_id")
     private HomeEntity home;
+
+    private String title;
 
     private String filename;
 
@@ -34,7 +37,5 @@ public class DocumentEntity {
     private String localName;
 
     @Column(name = "creation_date")
-    private LocalDateTime creationDate;
-
-    private String title;
+    private Instant creationDate;
 }

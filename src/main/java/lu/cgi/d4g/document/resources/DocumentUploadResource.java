@@ -1,11 +1,16 @@
 package lu.cgi.d4g.document.resources;
 
 import lombok.extern.slf4j.Slf4j;
+import lu.cgi.d4g.document.services.DocumentService;
+import lu.cgi.d4g.house.information.entities.HomeEntity;
+import lu.cgi.d4g.house.information.services.HomeService;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
+import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.InternalServerErrorException;
@@ -29,15 +34,23 @@ public class DocumentUploadResource {
     @ConfigProperty(name = "green.l4nterne.upload.path")
     String fileUploadPath;
 
+    @Inject
+    HomeService homeService;
+
+    @Inject
+    DocumentService documentService;
+
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Transactional
     // FIXME restrict to admin
     public Response upload(MultipartFormDataInput input) {
         final Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
         try {
             final long homeId = Long.parseLong(uploadForm.get("home").get(0).getBodyAsString());
-            // FIXME check home exists
-            doUploadFile(homeId, uploadForm.get("file"));
+            final String title = uploadForm.get("title").get(0).getBodyAsString();
+            final HomeEntity home = homeService.findById(homeId);
+            doUploadFile(uploadForm.get("file"), home, title);
         } catch (IOException | NumberFormatException e) {
             throw new BadRequestException("Incorrect data");
         }
@@ -45,7 +58,7 @@ public class DocumentUploadResource {
         return Response.ok("File was uploaded").build();
     }
 
-    private void doUploadFile(long homeId, List<InputPart> inputParts) {
+    private void doUploadFile(List<InputPart> inputParts, HomeEntity home, String title) {
         for (InputPart inputPart : inputParts) {
             try {
                 final MultivaluedMap<String, String> header = inputPart.getHeaders();
@@ -57,8 +70,7 @@ public class DocumentUploadResource {
 
                 writeFile(inputStream, storedFilename);
 
-                // FIXME save in DB
-                log.info("Uploaded {} to {}", originalFilename, storedFilename);
+                documentService.createDocument(home, originalFilename, storedFilename, title);
             } catch (IOException e) {
                 throw new InternalServerErrorException("Upload failed");
             }
