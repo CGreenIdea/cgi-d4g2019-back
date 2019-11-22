@@ -1,7 +1,7 @@
 git pull
 
-npm i
-npm run build
+#npm i
+#npm run build
 # find src/main/resources/META-INF/resources \( -name '*.css' -o -name '*.css' -o -name '*.html' \) -exec gzip --verbose --keep {} \;
 
 docker start -i graalvm
