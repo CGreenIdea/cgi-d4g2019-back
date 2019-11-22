@@ -1,4 +1,4 @@
-package lu.cgi.d4g;
+package lu.cgi.d4g.document.entities;
 
 import lombok.Getter;
 import lombok.Setter;
