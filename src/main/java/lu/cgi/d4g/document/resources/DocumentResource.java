@@ -1,7 +1,10 @@
 package lu.cgi.d4g.document.resources;
 
+import lu.cgi.d4g.document.dto.DocumentBean;
 import lu.cgi.d4g.document.entities.DocumentEntity;
 import lu.cgi.d4g.document.services.DocumentService;
+import lu.cgi.d4g.house.consumption.dto.EnergyReading;
+import lu.cgi.d4g.house.consumption.entities.ConsumptionEntity;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -25,6 +28,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/document")
 public class DocumentResource {
@@ -39,8 +43,8 @@ public class DocumentResource {
     @Path("/mine")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"user"})
-    public List<DocumentEntity> find(@Context SecurityContext securityContext) {
-        return documentService.findByUser(securityContext.getUserPrincipal().getName());
+    public List<DocumentBean> find(@Context SecurityContext securityContext) {
+        return parseDocuments(documentService.findByUser(securityContext.getUserPrincipal().getName()));
     }
 
     @GET
@@ -82,8 +86,19 @@ public class DocumentResource {
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("admin")
-    public List<DocumentEntity> findAll() {
-        return documentService.findAll();
+    public List<DocumentBean> findAll() {
+        return parseDocuments(documentService.findAll());
     }
 
+
+    private List<DocumentBean> parseDocuments(List<DocumentEntity> docs) {
+        return docs.stream()
+            .map(d -> DocumentBean.builder()
+                .id(d.getId())
+                .fileName(d.getFilename())
+                .title(d.getTitle())
+                .creationDate(d.getCreationDate())
+                .build())
+            .collect(Collectors.toList());
+    }
 }
