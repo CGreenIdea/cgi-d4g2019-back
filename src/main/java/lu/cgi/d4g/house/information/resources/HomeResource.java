@@ -26,7 +26,7 @@ public class HomeResource {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"user"})
     public List<HomeEntity> find(@Context SecurityContext securityContext) {
-        return homeService.findByUser(securityContext.getUserPrincipal().getName());
+        return homeService.findAllByUser(securityContext.getUserPrincipal().getName());
     }
 
     @GET

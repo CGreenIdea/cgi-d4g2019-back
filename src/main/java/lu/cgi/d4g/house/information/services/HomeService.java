@@ -48,7 +48,7 @@ public class HomeService {
         return home;
     }
 
-    public List<HomeEntity> findByUser(String userId) {
+    public List<HomeEntity> findAllByUser(String userId) {
         return entityManager
             .createQuery("SELECT h FROM HomeEntity h INNER JOIN UserEntity u ON h = u.home WHERE u.userId = :user", HomeEntity.class)
             .setParameter("user", userId)
@@ -61,7 +61,7 @@ public class HomeService {
             .getResultList();
     }
 
-    public HomeEntity findHomeByLabel(String label) {
+    public HomeEntity findByLabel(String label) {
         return entityManager
             .createQuery("SELECT h FROM HomeEntity h WHERE h.label = :label", HomeEntity.class)
             .setParameter("label", label)
