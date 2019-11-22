@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -29,7 +30,9 @@ public class DocumentEntity {
 
     private String filename;
 
-    @Column(name = "localName", length = 36)
+    @Column(name = "local_name", length = 36)
     private String localName;
 
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
 }
