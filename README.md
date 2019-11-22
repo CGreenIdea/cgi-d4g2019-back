@@ -30,16 +30,11 @@ Les sources de ce challenge restent la propriété de l'équipe de développeurs
   
 ## Contribution
 
-### Running the dev mode
+### Lancer le développement local
 
-* `mvn compile quarkus:dev` : démarre un serveur local (http://localhost:8080 et http://localhost:8080/swagger-ui/)
+* `npm i` installe les dépendances NPM requises
+* `npm run start` démarre un serveur local (http://localhost:3000)
+* `npm run build` construit le front dans le répertoire `dist`
+* `mvn compile quarkus:dev` démarre un serveur local (http://localhost:8080 et http://localhost:8080/swagger-ui/)
 
-## Login
-
-* A login page is available for security testing at http://localhost:8080/
-
-## Front
-
-* `npm i` : installation des dépendances (une fois après le clone ou mise à jour des dépendances)
-* `npm run start` : démarre un serveur local (http://localhost:3000)
-* `npm run build` : construit le front dans le répertoire `dist`
+Le serveur est disponible à http://localhost:8080/
