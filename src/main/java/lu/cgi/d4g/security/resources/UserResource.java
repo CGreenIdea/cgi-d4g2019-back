@@ -70,15 +70,14 @@ public class UserResource {
     @Path("/reset")
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response resetPassword(@Context SecurityContext securityContext) {
-        String userName = securityContext.getUserPrincipal().getName();
-        UserEntity user = userService.findByUserId(userName);
+    public Response resetPassword(String username) {
+        UserEntity user = userService.findByUserId(username);
         String token = UUID.randomUUID().toString();
         user.setExpiryReset(LocalDate.now().plusDays(1));
         user.setResetToken(token);
         userService.update(user);
 
-        return mailerService.sendReset(userName, token).toCompletableFuture().join();
+        return mailerService.sendReset(username, token).toCompletableFuture().join();
     }
 
     @POST
