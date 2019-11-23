@@ -69,7 +69,6 @@ public class UserResource {
     @POST
     @Path("/reset")
     @PermitAll
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response resetPassword(String username) {
         UserEntity user = userService.findByUserId(username);
         String token = UUID.randomUUID().toString();
